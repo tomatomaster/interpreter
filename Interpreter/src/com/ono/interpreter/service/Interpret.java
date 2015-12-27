@@ -70,6 +70,10 @@ public class Interpret {
 		System.out.println("=======================================");
 	}
 
+	/**
+	 * パラメータのクラスのフィールドを表示する
+	 * @param targetClass
+	 */
 	public static void showFields(Class<?> targetClass) {
 		Field[] fields = targetClass.getFields();
 		for (final Field field : fields) {
@@ -79,21 +83,4 @@ public class Interpret {
 			System.out.println(modifier + " " + typeName + " " + name);
 		}
 	}
-
-	public static Class<?> makeObject(Class<?> targetClass, String initargs,
-			Class<?>... parameterTypes) {
-		Class<?> instance = null;
-
-		Constructor<?> constractor;
-		try {
-			constractor = targetClass.getConstructor(parameterTypes);
-			instance = (Class<?>) constractor.newInstance(initargs);
-		} catch (NoSuchMethodException | SecurityException
-				| InstantiationException | IllegalAccessException
-				| IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		return instance;
-	}
-
 }
