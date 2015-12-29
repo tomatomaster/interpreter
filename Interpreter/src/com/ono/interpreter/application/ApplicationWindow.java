@@ -23,13 +23,8 @@ import javax.swing.text.FlowView;
 
 import com.ono.interpreter.application.panel.ArgumentPanel;
 import com.ono.interpreter.application.panel.ConstructorPanel;
-import com.ono.interpreter.application.uiparts.button.CallConstractorButton;
-import com.ono.interpreter.application.uiparts.button.MakeObjectButton;
-import com.ono.interpreter.application.uiparts.list.ConstructorList;
 import com.ono.interpreter.application.uiparts.menu.menubar.MyMenuBar;
-import com.ono.interpreter.application.uiparts.table.ArgumentsTable;
-import com.ono.interpreter.application.uiparts.textarea.ConstractorSearchableForm;
-import com.ono.interpreter.application.uiparts.textarea.ParameterInputForm;
+
 
 public class ApplicationWindow extends JFrame {
 
@@ -58,6 +53,5 @@ public class ApplicationWindow extends JFrame {
 				
 		Container contentPane = getContentPane();
 		contentPane.add(panel, BorderLayout.NORTH);
-		contentPane.add(argumentPanel, BorderLayout.CENTER);
 	}
 }

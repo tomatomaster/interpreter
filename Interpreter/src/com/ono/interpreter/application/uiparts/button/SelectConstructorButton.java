@@ -8,9 +8,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 
 import com.ono.interpreter.application.panel.ArgumentPanel;
 import com.ono.interpreter.application.uiparts.dialog.ExceptionDialog;
+import com.ono.interpreter.application.uiparts.dialog.ParameterInputDialog;
 import com.ono.interpreter.application.uiparts.list.ConstructorList;
 import com.ono.interpreter.service.ClassContents;
 import com.ono.interpreter.service.ObjectFactoryService;
@@ -21,9 +23,9 @@ import com.ono.interpreter.service.ObjectFactoryService;
  * @author ono
  *
  */
-public class MakeObjectButton extends JButton {
+public class SelectConstructorButton extends JButton {
 
-	private static MakeObjectButton	instance	= null;
+	private static SelectConstructorButton	instance	= null;
 	private static final String		NAME		= "Select";
 
 	private static Object			obj			= null;
@@ -31,15 +33,16 @@ public class MakeObjectButton extends JButton {
 	/*
 	 * Singleton
 	 */
-	public static MakeObjectButton getInstance() {
+	public static SelectConstructorButton getInstance() {
 		if (instance == null) {
-			instance = new MakeObjectButton();
+			instance = new SelectConstructorButton();
 		}
 		return instance;
 	}
 
-	private MakeObjectButton() {
+	private SelectConstructorButton() {
 		super(NAME);
+		final JDialog dialog = new ParameterInputDialog();
 		addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -47,6 +50,7 @@ public class MakeObjectButton extends JButton {
 				// コンストラクタパネルの設定
 				ArgumentPanel.getInstance().setConstructor(constructor);
 				ObjectFactoryService.setConstructor(constructor);
+				dialog.setVisible(true);
 			}
 		});
 	}
