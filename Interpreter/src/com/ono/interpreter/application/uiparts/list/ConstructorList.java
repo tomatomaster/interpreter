@@ -1,11 +1,12 @@
 package com.ono.interpreter.application.uiparts.list;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.util.Objects;
 
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 
@@ -13,6 +14,10 @@ public class ConstructorList extends JList<Object> {
 
 	private static final long	serialVersionUID	= 1L;
 	private static ConstructorList instance = null;
+
+	//Dimensionの値
+	private static final int WIDTH = 650;
+	private static final int HEIGHT = 200;
 	
 	//Singleton
 	public static ConstructorList getInstance() {
@@ -20,6 +25,13 @@ public class ConstructorList extends JList<Object> {
 			instance = new ConstructorList();
 		}
 		return instance;
+	}
+	
+	public static Component getComponentModel() {
+		ConstructorList instance = getInstance();
+		JScrollPane scrollPane = new JScrollPane(instance);
+		scrollPane.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		return scrollPane;
 	}
 	
 	private ConstructorList() {

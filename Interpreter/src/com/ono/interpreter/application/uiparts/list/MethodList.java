@@ -2,43 +2,48 @@ package com.ono.interpreter.application.uiparts.list;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Objects;
 
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-/**
- * 今は使用していない
- * @author ono
- *
- */
-public class ParameterList extends JList<Field> {
+public class MethodList extends JList<Method> {
 	private static final long	serialVersionUID	= 1L;
-	private static ParameterList instance = null;
+	private static MethodList instance = null;
 	
 	//Dimensionの値
 	private static final int WIDTH = 650;
 	private static final int HEIGHT = 200;
 	
 	//Singleton
-	public static ParameterList getInstance() {
+	public static MethodList getInstance() {
 		if(instance == null) {
-			instance = new ParameterList();
+			instance = new MethodList();
 		}
 		return instance;
 	}
 	
 	public static Component getComponentModel() {
-		ParameterList instance = getInstance();
+		MethodList instance = getInstance();
 		JScrollPane scrollPane = new JScrollPane(instance);
 		scrollPane.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		return scrollPane;
 	}
 	
-	private ParameterList() {
+	private MethodList() {
 		super();
 		//複数のリスト選択を禁止
-		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+	}
+	
+	/**
+	 * リストに表示するオブジェクトをセットする
+	 * @param obj
+	 */
+	public void setList(Method[] obj) {
+		setListData(Objects.requireNonNull(obj));
 	}
 }

@@ -26,7 +26,7 @@ import com.ono.interpreter.service.ObjectFactoryService;
 public class SelectConstructorButton extends JButton {
 
 	private static SelectConstructorButton	instance	= null;
-	private static final String		NAME		= "Select";
+	private static final String		NAME		= "SetParameter";
 
 	private static Object			obj			= null;
 
