@@ -17,10 +17,10 @@ public class ObjectTree extends JTree {
 	private static final int WIDTH = ApplicationWindow.getWIDTH()/7;
 	private static final int HEIGHT= ApplicationWindow.getHEIGHT()/2;
 	private static Vector<String> treeData = new Vector<String>();
-	private static DefaultMutableTreeNode treeNode = new DefaultMutableTreeNode("Object");
+	private static DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Object");
 	
 	public ObjectTree() {
-		super(treeNode);
+		super(rootNode);
 	}
 	
 	public Component getComponentModel() {
@@ -28,5 +28,16 @@ public class ObjectTree extends JTree {
 		scrollPane.getViewport().setView(this);
 		scrollPane.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		return scrollPane;
+	}
+	
+	public void addObject(String objName) {
+	  rootNode.add(new DefaultMutableTreeNode(objName));
+	}
+	
+	/*
+	 * Objectが生成された時にリストを更新する。
+	 */
+	public void update() {
+	  
 	}
 }

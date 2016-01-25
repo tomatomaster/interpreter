@@ -59,9 +59,10 @@ public class ApplicationWindow extends JFrame {
 	}
 	
 	private void setWindowComponent() {
-		setMenuBar(new MyMenuBar());
+		setJMenuBar(new MyMenuBar());
 		
 		//Frameにコンポーネントを貼り付ける
+		//ContentPaneはコンテンツを貼り付ける板と考えていい
 		Container contentPane = getContentPane();
 		//オブジェクトツリーの表示
 		Component objectTree = new ObjectTree().getComponentModel();

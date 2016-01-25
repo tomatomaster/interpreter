@@ -7,20 +7,24 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
+import com.ono.interpreter.application.uiparts.dialog.InputClassNameDialog;
 import com.ono.interpreter.application.uiparts.menu.SettingsMenuItem;
 
-class MyMenu extends Menu implements ActionListener {
+class MyMenu extends JMenu implements ActionListener {
 
 	private final static String MENU_NAME = "MENU";
-	private final static List<MenuItem> menuItems = new ArrayList<>();
+	private final static List<JMenuItem> menuItems = new ArrayList<>();
 	
 	{
-		menuItems.add(new SettingsMenuItem());
+		menuItems.add(new SettingsMenuItem("MakeObject", new InputClassNameDialog()));
 	}
 	
 	public MyMenu() {
 		super(MENU_NAME);
-		for(final MenuItem menuItem : menuItems) {
+		for(final JMenuItem menuItem : menuItems) {
 			add(menuItem);
 		}
 	}

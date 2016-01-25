@@ -33,8 +33,7 @@ final public class ObjectPool {
 	 * オブジェクトをSimpleNameで管理
 	 * @param obj
 	 */
-	public void setObject(Object obj) {
-		String objName = obj.getClass().getSimpleName();
+	public void setObject(Object obj,String objName) {
 		objectPool.put(objName, obj);
 	}
 	
@@ -60,5 +59,4 @@ final public class ObjectPool {
 	public void clear() {
 		objectPool.clear();
 	}
-
 }

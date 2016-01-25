@@ -5,14 +5,17 @@ import java.awt.MenuBar;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+
 /**
  * メニューバーそのものを管理するクラス
  * @author ono
  *
  */
-public class MyMenuBar extends MenuBar {
+public class MyMenuBar extends JMenuBar {
 	//メニューバーに表示されるメニューのリスト
-	List<Menu> menuList = new ArrayList<Menu>();
+	List<JMenu> menuList = new ArrayList<JMenu>();
 
 	//メニューバーに追加するメニューはここに書く
 	{
@@ -21,7 +24,7 @@ public class MyMenuBar extends MenuBar {
 
 	public MyMenuBar() {
 		super();
-		for(final Menu menu: menuList) {
+		for(final JMenu menu: menuList) {
 			add(menu);
 		}
 	}

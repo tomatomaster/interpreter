@@ -42,11 +42,11 @@ public class SelectConstructorButton extends JButton {
 
 	private SelectConstructorButton() {
 		super(NAME);
-		final JDialog dialog = new ParameterInputDialog();
+        final JDialog dialog = new ParameterInputDialog();
 		addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Constructor<?> constructor = (Constructor<?>) ConstructorList.getInstance().getList();
+              Constructor<?> constructor = (Constructor<?>) ConstructorList.getInstance().getList();
 				// コンストラクタパネルの設定
 				ArgumentPanel.getInstance().setConstructor(constructor);
 				ObjectFactoryService.setConstructor(constructor);

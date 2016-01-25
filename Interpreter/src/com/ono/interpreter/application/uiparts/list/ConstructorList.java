@@ -3,11 +3,21 @@ package com.ono.interpreter.application.uiparts.list;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.lang.reflect.Constructor;
 import java.util.Objects;
 
+import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import com.ono.interpreter.application.panel.ArgumentPanel;
+import com.ono.interpreter.application.uiparts.dialog.ParameterInputDialog;
+import com.ono.interpreter.service.ObjectFactoryService;
 
 
 public class ConstructorList extends JList<Object> {
@@ -38,6 +48,22 @@ public class ConstructorList extends JList<Object> {
 		super();
 		//複数のリスト選択を禁止
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//リスト要素を選択した時の挙動
+		addMouseListener(new MouseAdapter() {
+		  @Override
+		  public void mouseClicked(MouseEvent e) {
+		    if(e.getClickCount() == 2) {
+	           //1.1コンストラクタリストから選択したコンストラクタを取得する
+	            Constructor<?> constructor = (Constructor<?>) ConstructorList.getInstance().getList();
+	            //1.2コンストラクタの引数を編集するArgumentPanelにコンストラクタをセットする
+	            ArgumentPanel.getInstance().setConstructor(constructor);
+	            //2オブジェクト生成を行うObjectFactoryServiceにコンストラクタをセット
+	            ObjectFactoryService.setConstructor(constructor);
+	            //3コンストラクタダイアログを表示する
+	            new ParameterInputDialog().setVisible(true);
+		    }
+		  }
+		});
 	}
 	
 	/**

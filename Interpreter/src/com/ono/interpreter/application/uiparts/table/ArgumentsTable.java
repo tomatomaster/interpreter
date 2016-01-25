@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 
 public class ArgumentsTable extends JTable {
 
 	private final static String NAME = "arguments";
-	List<Class<?>> consData = new ArrayList<Class<?>>();
-	String[][][] data;
-	String[] Attribute = {"TYPE", "NAME", "VALUE"};
+	private final String[] Attribute = {"TYPE", "VALUE"};
+	
+	private Class<?>[] types = new Class<?>[0];
+	private Object[] objects = new Object[0];
+	    
 	
 	public ArgumentsTable(Constructor<?> constructor) {
 		for(final Class<?> paraType : constructor.getParameterTypes()) {
@@ -25,5 +28,7 @@ public class ArgumentsTable extends JTable {
 			tableData.add(paraType);
 		}
 
+	}
+	  
 	}
 }
