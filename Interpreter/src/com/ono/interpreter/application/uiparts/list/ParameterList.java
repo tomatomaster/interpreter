@@ -4,9 +4,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 import javax.swing.JDialog;
 import javax.swing.JList;
@@ -14,7 +17,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
 
+import com.ono.interpreter.application.uiparts.dialog.FiledValueModifierDialog;
+import com.ono.interpreter.application.uiparts.textarea.ConstructorPrameterInputField;
 import com.ono.interpreter.application.util.GridBagLayoutUtil;
+import com.ono.interpreter.service.MyModifyField;
 import com.ono.interpreter.service.ObjectPool;
 
 /**
@@ -60,7 +66,9 @@ public class ParameterList extends JList<Field> {
       @Override
       public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
-          new ParameterEditDialog(getSelectedValue()).setVisible(true);
+          Field selectedFiled = getSelectedValue();
+          Objects.requireNonNull(selectedFiled);
+          new FiledValueModifierDialog(selectedFiled).setVisible(true);
         }
       }
     });
@@ -78,6 +86,18 @@ public class ParameterList extends JList<Field> {
         valueSpnipper.setPreferredSize(new Dimension(80, 20));
         GridBagLayoutUtil.setGbcLayout(0, 0, new GridBagConstraints(), valueSpnipper, new GridBagLayout(), this);
       }
+      addKeyListener(new KeyListener() {
+        @Override
+        public void keyTyped(KeyEvent e) {}
+        @Override
+        public void keyReleased(KeyEvent e) {}
+        @Override
+        public void keyPressed(KeyEvent e) {
+          if(e.equals(KeyEvent.VK_ENTER)) {
+            
+          }
+        }
+      });
     }
   }
 }

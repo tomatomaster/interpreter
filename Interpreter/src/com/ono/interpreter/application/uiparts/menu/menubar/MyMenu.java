@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import com.ono.interpreter.application.uiparts.dialog.InputClassNameDialog;
+import com.ono.interpreter.application.uiparts.dialog.MakeArrayObjectDialog;
 import com.ono.interpreter.application.uiparts.menu.SettingsMenuItem;
 
 class MyMenu extends JMenu implements ActionListener {
@@ -20,6 +22,7 @@ class MyMenu extends JMenu implements ActionListener {
 	
 	{
 		menuItems.add(new SettingsMenuItem("MakeObject", new InputClassNameDialog()));
+		menuItems.add(new SettingsMenuItem("MakeArray", new MakeArrayObjectDialog()));
 	}
 	
 	public MyMenu() {

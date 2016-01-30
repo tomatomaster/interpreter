@@ -17,6 +17,8 @@ import com.ono.interpreter.application.uiparts.list.ConstructorList;
 import com.ono.interpreter.application.uiparts.list.MethodList;
 import com.ono.interpreter.application.uiparts.list.ParameterList;
 import com.ono.interpreter.application.uiparts.textarea.ConstractorSearchableForm;
+import com.ono.interpreter.application.uiparts.textarea.ConstructorPrameterInputField;
+import com.ono.interpreter.application.uiparts.textarea.ObjectNameField;
 import com.ono.interpreter.application.util.GridBagLayoutUtil;
 
 
@@ -45,26 +47,26 @@ public class ConstructorPanel extends JPanel {
 	 */
 	private void setComponents() {
 		// コンストラクタを指定するテキストフィールド
-		Component searchableForm = ConstractorSearchableForm.getInstance();
-		GridBagLayoutUtil.setGbcLayout(0, 0, gbc, searchableForm, layout, this);
+		//Component searchableForm = ConstractorSearchableForm.getInstance();
+		//GridBagLayoutUtil.setGbcLayout(0, 0, gbc, searchableForm, layout, this);
 		//入力受付ボタン
-		Component constructorButton = new CallConstractorButton(ConstractorSearchableForm.getInstance());
-		GridBagLayoutUtil.setGbcLayout(1, 0, gbc, constructorButton, layout, this);
+		//Component constructorButton = new CallConstractorButton(ConstractorSearchableForm.getInstance());
+		//GridBagLayoutUtil.setGbcLayout(1, 0, gbc, constructorButton, layout, this);
 		// 検索結果を表示するリストフィールド
-		Component constructorList = ConstructorList.getComponentModel();
-		GridBagLayoutUtil.setGbcLayout(0, 1, gbc, constructorList, layout, this);
+		//Component constructorList = ConstructorList.getComponentModel();
+		//GridBagLayoutUtil.setGbcLayout(0, 1, gbc, constructorList, layout, this);
 		// パラメータを入力するダイアログを表示するボタン
-		Component setParameterButton = SelectConstructorButton.getInstance();
-		GridBagLayoutUtil.setGbcLayout(0, 3, gbc, setParameterButton, layout, this);
+//		Component setParameterButton = SelectConstructorButton.getInstance();
+//		GridBagLayoutUtil.setGbcLayout(0, 3, gbc, setParameterButton, layout, this);
 		// オブジェクトを生成するボタン
-		Component makeObjectButton = new MakeObjectButton();
-		GridBagLayoutUtil.setGbcLayout(1, 3, gbc, makeObjectButton, layout, this);
+//		Component makeObjectButton = new MakeObjectButton(new ConstructorPrameterInputField(), new ObjectNameField());
+//		GridBagLayoutUtil.setGbcLayout(1, 3, gbc, makeObjectButton, layout, this);
 		//生成したオブジェクトのメソッド一覧を表示するリスト
 		Component methodList = MethodList.getComponentModel();
 		GridBagLayoutUtil.setGbcLayout(0, 4, gbc, methodList, layout, this);
-		//Invokeボタン
-		Component invokeButton = new InvokeButton();
-		GridBagLayoutUtil.setGbcLayout(0, 5, gbc, invokeButton, layout, this);
+//		//Invokeボタン
+//		Component invokeButton = new InvokeButton();
+//		GridBagLayoutUtil.setGbcLayout(0, 5, gbc, invokeButton, layout, this);
 		//パラメータリスト
 		Component paraList = ParameterList.getComponentModel();
 		GridBagLayoutUtil.setGbcLayout(0, 6, gbc, paraList, layout, this);

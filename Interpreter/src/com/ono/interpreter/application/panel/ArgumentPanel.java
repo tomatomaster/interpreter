@@ -25,6 +25,7 @@ import com.ono.interpreter.application.uiparts.NativeParameterSpiner;
 import com.ono.interpreter.application.uiparts.button.MakeObjectButton;
 import com.ono.interpreter.application.uiparts.button.ObjectTypeArgSettingButton;
 import com.ono.interpreter.application.uiparts.list.ConstructorList;
+import com.ono.interpreter.application.uiparts.textarea.ConstructorPrameterInputField;
 import com.ono.interpreter.application.uiparts.textarea.ObjectNameField;
 import com.ono.interpreter.application.util.GridBagLayoutUtil;
 import com.ono.interpreter.service.ObjectFactoryService;
@@ -60,42 +61,32 @@ public class ArgumentPanel extends JPanel {
     ArgumentPanel.constructor = constructor;
     // パラメータの型を取得する
     Class<?>[] parameterTypes = constructor.getParameterTypes();
-    spinners = new ArrayList<>();
+
+
+    
     // コンポーネントの配置位置を指定する
     int componentIndent = 0;
-    for (int i = 0; i < parameterTypes.length; i++) {
-      Class<?> type = parameterTypes[i];
-
-      // ラベルの貼り付け
-      JLabel typeName = new JLabel(type.getSimpleName());
-      GridBagLayoutUtil.setGbcLayout(0, componentIndent, gbc, typeName, layout, this);
-
-      // Primitive型に対してはスピナーで入力受付
-      if (type.isPrimitive()) {
-        final NativeParameterSpiner valueSpnipper = new NativeParameterSpiner(i);
-        spinners.add(valueSpnipper);
-        // TODO 値の上限値下限値を設定する
-        valueSpnipper.setPreferredSize(new Dimension(80, 20));
-        GridBagLayoutUtil.setGbcLayout(1, componentIndent, gbc, valueSpnipper, layout, this);
-      } else {
-        // テキストフィールド表示してオブジェクト名からオブジェクトとってくるようにする？
-        GridBagLayoutUtil.setGbcLayout(1, componentIndent, gbc, new JButton("test"), layout, this);
-      }
-      componentIndent++;
-    }
-
-    JTextField objectNameField = ObjectNameField.getInstance();
-    GridBagLayoutUtil.setGbcLayout(1, componentIndent++, gbc, objectNameField, layout, this);
-    JButton setPrameterButton = new MakeObjectButton();
-    setPrameterButton.addActionListener(new ActionListener() {
+    //パラメータを入力するフィールド
+    final ConstructorPrameterInputField argumentField = new ConstructorPrameterInputField();
+    argumentField.addActionListener( new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        for (NativeParameterSpiner spinner : spinners) {
-          spinner.getValue();
-          spinner.getIndex();
+        if(e.getSource() == ObjectNameField.class) {
+          System.out.println("MakeObject!!");
+          Object[] args = argumentField.getArguments();
+          System.out.println(args);
+          ObjectFactoryService.setArgs(args);
         }
       }
     });
+    GridBagLayoutUtil.setGbcLayout(1, componentIndent++, gbc, argumentField, layout, this);
+
+    //オブジェクト名を入力するフィールド
+    ObjectNameField objectNameField = new ObjectNameField();
+    GridBagLayoutUtil.setGbcLayout(1, componentIndent++, gbc, objectNameField, layout, this);
+
+    //オブジェクト生成ボタン
+    JButton setPrameterButton = new MakeObjectButton(argumentField, objectNameField);
     GridBagLayoutUtil.setGbcLayout(1, componentIndent, gbc, setPrameterButton, layout, this);
   }
 }

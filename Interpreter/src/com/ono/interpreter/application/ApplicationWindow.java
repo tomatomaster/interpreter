@@ -35,8 +35,8 @@ public class ApplicationWindow extends JFrame {
 
 	private static GridBagConstraints gbc = new GridBagConstraints();
 	GridBagLayout		layout	= new GridBagLayout();
-	private static int WIDTH = 1000;
-	private static int HEIGHT = 1000;
+	private static int WIDTH = 700;
+	private static int HEIGHT = 500;
 	
 	public static int getWIDTH() {
 		return WIDTH;
@@ -65,8 +65,8 @@ public class ApplicationWindow extends JFrame {
 		//ContentPaneはコンテンツを貼り付ける板と考えていい
 		Container contentPane = getContentPane();
 		//オブジェクトツリーの表示
-		Component objectTree = new ObjectTree().getComponentModel();
-		GridBagLayoutUtil.setGbcLayout(0, 0, gbc, objectTree, layout, contentPane);
+		//Component objectTree = new ObjectTree().getComponentModel();
+		//GridBagLayoutUtil.setGbcLayout(0, 0, gbc, objectTree, layout, contentPane);
 		//コンストラクタパネルの貼り付け
 		Component constructorPanel = new ConstructorPanel();
 		GridBagLayoutUtil.setGbcLayout(1, 0, gbc, constructorPanel, layout, contentPane);

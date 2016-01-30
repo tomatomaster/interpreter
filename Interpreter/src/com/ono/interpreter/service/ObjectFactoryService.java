@@ -15,7 +15,8 @@ public class ObjectFactoryService {
   private static ObjectFactoryService instance;
   private static Constructor<?> constructor;
   private static Object[] args;
-  private static Object obj;
+  //フレーム上に表示されているインスタンスを他のサービスから利用するために用いる
+  public static Object currentObj;
 
   // Getter & Setter
   public Constructor<?> getConstructor() {
@@ -69,6 +70,7 @@ public class ObjectFactoryService {
   public Object makeObject(Object... args) throws InstantiationException, IllegalAccessException,
       IllegalArgumentException, InvocationTargetException {
     Object obj = constructor.newInstance(args);
+    currentObj = obj;
     return obj;
   }
 
@@ -87,17 +89,20 @@ public class ObjectFactoryService {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException,
       InvocationTargetException {
     Object obj = Objects.requireNonNull(constractor).newInstance(args);
+    currentObj = obj;
     return obj;
   }
 
   public static Object makeObject() throws InstantiationException, IllegalAccessException,
       IllegalArgumentException, InvocationTargetException {
-    obj = constructor.newInstance(args);
+    Object obj = constructor.newInstance(args);
+    currentObj = obj;
     return obj;
   }
 
   public static Object makeArrayObject(Class<?> clazz, int arraySize) {
-    obj = Array.newInstance(clazz, arraySize);
+    Object obj = Array.newInstance(clazz, arraySize);
+    currentObj = obj;
     return obj;
   }
 }
