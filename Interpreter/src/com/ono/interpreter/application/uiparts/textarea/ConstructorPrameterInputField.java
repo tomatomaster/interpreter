@@ -18,7 +18,7 @@ import com.ono.interpreter.service.ObjectPool;
  */
 public class ConstructorPrameterInputField extends JTextField {
 
-  private final static String DEFAULT_INPUT = "int 3, String test, Instance ObjectName";
+  private final static String DEFAULT_INPUT = "Instance args,String test";
   private final static int WIDTH = 20;
 
   public ConstructorPrameterInputField() {
@@ -99,13 +99,16 @@ public class ConstructorPrameterInputField extends JTextField {
     else if (type.equals("float")) {
       return Float.valueOf(value);
     }
+    else if(type.equals("long")) {
+      return Long.valueOf(value);
+    }
     // Short
     else if (type.equals("short")) {
       return Short.valueOf(value);
     }
     // Char
     else if (type.equals("char")) {
-      return (char) Integer.valueOf(value).intValue();
+      return String.valueOf(value).toCharArray()[0];
     }
     // Byte
     else if (type.equals("byte")) {
@@ -117,7 +120,9 @@ public class ConstructorPrameterInputField extends JTextField {
     }
     // Object
     else if (type.equals("Instance")) {
-      return ObjectPool.getInstance().getObject(value);
+      Object gottenObject = ObjectPool.getInstance().getObject(value);
+      System.out.println(gottenObject);
+      return gottenObject;
     } 
     // String
     else if (type.equals("String")) {

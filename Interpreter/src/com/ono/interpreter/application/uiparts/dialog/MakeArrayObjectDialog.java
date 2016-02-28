@@ -79,7 +79,7 @@ public class MakeArrayObjectDialog extends JDialog {
    *
    */
   private class ObjectNameTextFiled extends JTextField {
-    final private static String DEFAULT_INPUT = "array";
+    final private static String DEFAULT_INPUT = "args";
     final private static int WIDTH = 20;
 
     public ObjectNameTextFiled() {

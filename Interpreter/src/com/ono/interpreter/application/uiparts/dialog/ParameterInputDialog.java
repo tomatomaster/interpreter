@@ -14,8 +14,8 @@ public class ParameterInputDialog extends JDialog {
 
 	private static final long	serialVersionUID	= 1L;
 	private static String TITLE = "PrameterInput";
-	private static int WIDTH = 400;
-	private static int HEIGHT= 250;
+	private static int WIDTH = 550;
+	private static int HEIGHT= 180;
 	
 	public ParameterInputDialog() {
 		super(new JFrame(), TITLE);

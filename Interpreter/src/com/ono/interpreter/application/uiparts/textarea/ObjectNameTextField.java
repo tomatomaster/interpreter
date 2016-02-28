@@ -17,7 +17,7 @@ public class ObjectNameTextField extends JTextField {
 
   private static ObjectNameTextField instance = null;
   private final static int WIDTH = 20;
-  private final static String DEFAULT_INPUT = "objectName";
+  private final static String DEFAULT_INPUT = "com.ono.interpreter.application.ApplicationEntryPoint";
 
   // Singleton
   public static ObjectNameTextField getInstance() {

@@ -6,15 +6,15 @@ import com.ono.interpreter.application.uiparts.list.ConstructorList;
 
 public class ConstructorFrame extends JFrame {
 
-  private static final int WIDTH = 500;
-  private static final int HEIGHT = 400;
+  private static final int WIDTH = 400;
+  private static final int HEIGHT = 200;
 
   public ConstructorFrame() {
     init();
   }
 
   void init() {
-    setBounds(400, 400, WIDTH, HEIGHT);
+    setBounds(250, 250, WIDTH, HEIGHT);
     addComponets();
   }
 

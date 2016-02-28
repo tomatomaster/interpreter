@@ -32,10 +32,15 @@ import com.ono.interpreter.service.ObjectFactoryService;
 
 public class ArgumentPanel extends JPanel {
 
+  private static final String INSTRUCTION_SENTENCE1 = "生成したインスタンスを利用したい場合はInstance [instanceName]";
+  private static final String INSTRUCTION_SENTENCE2 = "配列にオブジェクトを挿入したい場合はインスタンス名を[Array].[Index]と入力する."; 
+      
+
   private static ArgumentPanel instance = null;
   public static Constructor<?> constructor;
   private static GridBagLayout layout = new GridBagLayout();
   private static List<NativeParameterSpiner> spinners;
+
   GridBagConstraints gbc = new GridBagConstraints();
 
   public static ArgumentPanel getInstance() {
@@ -63,15 +68,15 @@ public class ArgumentPanel extends JPanel {
     Class<?>[] parameterTypes = constructor.getParameterTypes();
 
 
-    
+
     // コンポーネントの配置位置を指定する
     int componentIndent = 0;
-    //パラメータを入力するフィールド
+    // パラメータを入力するフィールド
     final ConstructorPrameterInputField argumentField = new ConstructorPrameterInputField();
-    argumentField.addActionListener( new ActionListener() {
+    argumentField.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == ObjectNameField.class) {
+        if (e.getSource() == ObjectNameField.class) {
           System.out.println("MakeObject!!");
           Object[] args = argumentField.getArguments();
           System.out.println(args);
@@ -79,13 +84,15 @@ public class ArgumentPanel extends JPanel {
         }
       }
     });
+    GridBagLayoutUtil.setGbcLayout(1, componentIndent++, gbc, new JLabel(INSTRUCTION_SENTENCE1), layout, this);
+    GridBagLayoutUtil.setGbcLayout(1, componentIndent++, gbc, new JLabel(INSTRUCTION_SENTENCE2), layout, this);
     GridBagLayoutUtil.setGbcLayout(1, componentIndent++, gbc, argumentField, layout, this);
 
-    //オブジェクト名を入力するフィールド
+    // オブジェクト名を入力するフィールド
     ObjectNameField objectNameField = new ObjectNameField();
     GridBagLayoutUtil.setGbcLayout(1, componentIndent++, gbc, objectNameField, layout, this);
 
-    //オブジェクト生成ボタン
+    // オブジェクト生成ボタン
     JButton setPrameterButton = new MakeObjectButton(argumentField, objectNameField);
     GridBagLayoutUtil.setGbcLayout(1, componentIndent, gbc, setPrameterButton, layout, this);
   }

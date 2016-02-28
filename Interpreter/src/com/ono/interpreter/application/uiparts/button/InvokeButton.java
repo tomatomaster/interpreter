@@ -39,9 +39,12 @@ public class InvokeButton extends JButton {
           returnValue = method.invoke(obj, args);
           // void でsysoutしてるようなメソッドように標準アウトプット先をダイアログに変更する
           new InvokeReturnValueDialog(returnValue).setVisible(true);
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+        } catch (IllegalAccessException | IllegalArgumentException e1) {
           new ExceptionDialog(e1.toString());
           e1.printStackTrace();
+        } catch (InvocationTargetException e2) {
+          //e2は生のままだと本来メソッドが出す例外をラップしたreflection例外を返す。getCauseで本来の例外を取得する
+          new ExceptionDialog(e2.getCause().toString());
         }
       }
     });

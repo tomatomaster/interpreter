@@ -26,7 +26,7 @@ public class ConstructorList extends JList<Object> {
 	private static ConstructorList instance = null;
 
 	//Dimensionの値
-	private static final int WIDTH = 650;
+	private static final int WIDTH = 200;
 	private static final int HEIGHT = 200;
 	
 	//Singleton

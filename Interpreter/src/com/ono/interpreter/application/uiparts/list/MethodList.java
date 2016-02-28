@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JList;
@@ -67,6 +68,10 @@ public class MethodList extends JList<Method> {
   public void setList(Method[] obj) {
     setListData(Objects.requireNonNull(obj));
   }
+  
+  public void setListModel(DefaultListModel<String> model) {
+    setListModel(model);
+  }
 
   /**
    * 
@@ -75,8 +80,8 @@ public class MethodList extends JList<Method> {
    */
   private class InvokeMethodDialog extends JDialog {
     Method method;
-    final private static int WIDTH = 400;
-    final private static int HEIGHT = 400;
+    final private static int WIDTH = 300;
+    final private static int HEIGHT = 100;
     final private static int X = 400;
     final private static int Y = 400;
 

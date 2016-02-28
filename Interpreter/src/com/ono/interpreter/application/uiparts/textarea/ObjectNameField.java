@@ -16,7 +16,7 @@ import com.ono.interpreter.service.ConstructorService;
 public class ObjectNameField extends JTextField {
 
   private final static int WIDTH = 20;
-  private final static String DEFAULT_INPUT = "objectName";
+  private final static String DEFAULT_INPUT = "instanceName";
   private static String objectName;
   
   public ObjectNameField() {

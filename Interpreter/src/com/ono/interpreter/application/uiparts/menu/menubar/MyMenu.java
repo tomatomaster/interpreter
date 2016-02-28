@@ -13,16 +13,18 @@ import javax.swing.JMenuItem;
 
 import com.ono.interpreter.application.uiparts.dialog.InputClassNameDialog;
 import com.ono.interpreter.application.uiparts.dialog.MakeArrayObjectDialog;
+import com.ono.interpreter.application.uiparts.dialog.ObjectPoolViewerDialog;
 import com.ono.interpreter.application.uiparts.menu.SettingsMenuItem;
 
-class MyMenu extends JMenu implements ActionListener {
+class MyMenu extends JMenu {
 
 	private final static String MENU_NAME = "MENU";
 	private final static List<JMenuItem> menuItems = new ArrayList<>();
 	
 	{
 		menuItems.add(new SettingsMenuItem("MakeObject", new InputClassNameDialog()));
-		menuItems.add(new SettingsMenuItem("MakeArray", new MakeArrayObjectDialog()));
+		menuItems.add(new SettingsMenuItem("MakeArray" , new MakeArrayObjectDialog()));
+		menuItems.add(new SettingsMenuItem("Object"    , new ObjectPoolViewerDialog()));
 	}
 	
 	public MyMenu() {
@@ -30,9 +32,5 @@ class MyMenu extends JMenu implements ActionListener {
 		for(final JMenuItem menuItem : menuItems) {
 			add(menuItem);
 		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
 	}
 }

@@ -94,7 +94,6 @@ public class ParameterList extends JList<Field> {
         @Override
         public void keyPressed(KeyEvent e) {
           if(e.equals(KeyEvent.VK_ENTER)) {
-            
           }
         }
       });
