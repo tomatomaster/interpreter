@@ -130,7 +130,7 @@ public class ConstructorPrameterInputField extends JTextField {
     }
     // Error
     else {
-      new ExceptionDialog("Something Wrong!");
+      System.err.println("Wrong type is set");
       return null;
     }
   }

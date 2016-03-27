@@ -9,6 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import javax.swing.JButton;
 
@@ -47,15 +49,24 @@ public class MakeObjectButton extends JButton {
           Object instance;
           String objectName = objectNameField.getObjectName();
           // 2.1 arrayObjectかチェック
-          boolean isArray = checkObjectState(objectName);
+          boolean isArray = false;
+          try {
+            isArray = checkObjectState(objectName);
+          } catch (IllegalStateException e2) {
+            new ExceptionDialog(e2.getMessage());
+            return;
+          }
           if (isArray) {
             String[] nameAndIndex = objectName.split("\\.");
             String name = nameAndIndex[0];
-            int index   = Integer.valueOf(nameAndIndex[1]);
-            //対象のarrayObjectを取得して、生成したインスタンスをセットする
+            int index = Integer.valueOf(nameAndIndex[1]);
+            // 対象のarrayObjectを取得して、生成したインスタンスをセットする
             instance = ObjectFactoryService.makeObject();
             Object arrayObject = ObjectPool.getInstance().getObject(name);
+            if (arrayObject == null)
+              throw new NoSuchElementException();
             Array.set(arrayObject, index, instance);
+            ObjectPool.getInstance().setObject(instance, objectName);
           } else {
             instance = ObjectFactoryService.makeObject();
             // 2.1オブジェクトプールに生成したオブジェクトをセット
@@ -72,37 +83,40 @@ public class MakeObjectButton extends JButton {
 
           // 5.InvokeButtonに生成したオブジェクトを渡す
           InvokeButton.setObject(instance);
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-            | InvocationTargetException e1) {
-          new ExceptionDialog(e1.toString());
+        } catch (Exception e1) {
+          String errorMsg;
+          if (e1.getCause() != null) {
+            errorMsg = e1.getCause() + e1.getMessage();
+          } else {
+            errorMsg = e1.getMessage();
+          }
+          new ExceptionDialog(errorMsg);
           e1.printStackTrace();
         }
       }
 
       /**
        * If array instance named test[5] is in ObjectPool, test.2
+       * 
        * @param objectName
        * @return
        */
       private boolean checkObjectState(String objectName) {
         String[] nameAndIndex = objectName.split("\\.");
-        if(nameAndIndex.length != 2) {
+        if (nameAndIndex.length != 2) {
           return false;
         }
         String name = nameAndIndex[0];
-        int index   = Integer.valueOf(nameAndIndex[1]);
+        int index = Integer.valueOf(nameAndIndex[1]);
         Object arrayObject = ObjectPool.getInstance().getObject(name);
-
-        if(arrayObject == null) {
-          new ExceptionDialog("No such array object");
-          return false;
-        }
         
-        if(index < Array.getLength(arrayObject)) {
+        if(arrayObject == null) {
+          throw new IllegalStateException("No such array object");
+        }  else if (index >= Array.getLength(arrayObject)) {
+          throw new IllegalStateException("Array out of bounds");
+        } else if (index < Array.getLength(arrayObject)) {
           return true;
         }
-        
-        new ExceptionDialog("Array out of bounds");
         return false;
       }
     });
