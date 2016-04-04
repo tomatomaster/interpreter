@@ -1,6 +1,7 @@
 package com.ono.interpreter.application.uiparts.dialog;
 
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -30,7 +31,7 @@ import com.ono.interpreter.service.ObjectPool;
 public class ObjectPoolViewerDialog extends JDialog {
 
   List<Object> objects = new ArrayList<>();
-  ObjectList objectList= new ObjectList();
+  ObjectList objectList = new ObjectList();
   final private static String TITLE = "Objects";
   final private static int WIDTH = 300;
   final private static int HEIGHT = 200;
@@ -77,7 +78,7 @@ public class ObjectPoolViewerDialog extends JDialog {
    * @author ono
    *
    */
-  class ObjectList extends JList<Object> {
+  static class ObjectList extends JList<Object> {
 
     ObjectList() {
       super();
@@ -87,15 +88,19 @@ public class ObjectPoolViewerDialog extends JDialog {
         public void mouseClicked(MouseEvent e) {
           if (e.getClickCount() == 2) {
             String selectedObjectName = (String) getSelectedValue();
-            Object selectedObject = ObjectPool.getInstance().getObjectPool().get(selectedObjectName);
+            Object selectedObject =
+                ObjectPool.getInstance().getObjectPool().get(selectedObjectName);
+            if (selectedObject.getClass().isArray()) {
+              // ArrayViewerの表示
+              new ArrayObjectViewer(selectedObject);
+            }
             ObjectFactoryService.currentObj = selectedObject;
             updateList(selectedObject);
           }
         }
 
         /**
-         * セットされたオブジェクトを編集するために
-         * オブジェクトを編集するために使用するコンポーネントにオブジェクトをセットする
+         * セットされたオブジェクトを編集するために オブジェクトを編集するために使用するコンポーネントにオブジェクトをセットする
          * 
          * @param selectedObject
          */
@@ -110,6 +115,43 @@ public class ObjectPoolViewerDialog extends JDialog {
           InvokeButton.setObject(selectedObject);
         }
       });
+    }
+  }
+
+  private static class ArrayObjectViewer extends JDialog {
+
+    final private int WIDTH = 200;
+    private static int height; //要素の数に応じて可変
+    final private static int LIST_ELM_SIZE = 22;//リスト要素表示時の高さ
+    static final JFrame frame = new JFrame();
+    Object array;
+    ObjectList list = new ObjectList();
+
+    public ArrayObjectViewer(Object array) {
+      super(frame);
+      this.array = array;
+      // ここに配列のオブジェクトを表示させる処理をかく
+      add(list);
+      init();
+      setBounds(100, 100, WIDTH, height);
+      setVisible(true);
+    }
+
+    private void init() {
+      List<String> keys = new ArrayList<String>();
+      StringBuilder sb = new StringBuilder();
+
+      int arraySize = Array.getLength(array);
+      height = arraySize * LIST_ELM_SIZE;
+      for (int j = 0; j < arraySize; j++) {
+        if(Array.get(array, j) != null) {
+          Object _array = Array.get(array, j);
+          keys.add("["+ j + "]" + _array.getClass().toString());  
+        } else {
+          keys.add("["+ j + "]" + "null");
+        }
+      }
+      list.setListData(keys.toArray());
     }
   }
 }
