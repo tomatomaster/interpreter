@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,10 +22,14 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 
+import com.ono.interpreter.application.frame.ConstructorFrame;
 import com.ono.interpreter.application.uiparts.button.InvokeButton;
+import com.ono.interpreter.application.uiparts.list.ConstructorList;
 import com.ono.interpreter.application.uiparts.list.MethodList;
 import com.ono.interpreter.application.uiparts.list.ParameterList;
+import com.ono.interpreter.application.uiparts.textarea.ObjectNameTextField;
 import com.ono.interpreter.service.ClassContents;
+import com.ono.interpreter.service.ConstructorService;
 import com.ono.interpreter.service.ObjectFactoryService;
 import com.ono.interpreter.service.ObjectPool;
 
@@ -80,6 +85,8 @@ public class ObjectPoolViewerDialog extends JDialog {
    */
   static class ObjectList extends JList<Object> {
 
+    Class<?> selectedArrayClass;
+    
     ObjectList() {
       super();
       // ===========MouseListener===========
@@ -90,7 +97,10 @@ public class ObjectPoolViewerDialog extends JDialog {
             String selectedObjectName = (String) getSelectedValue();
             Object selectedObject =
                 ObjectPool.getInstance().getObjectPool().get(selectedObjectName);
-            if (selectedObject.getClass().isArray()) {
+            if (selectedObject == null) {
+              // List要素がNullならばインスタンス生成ダイアログを表示させる
+              return;
+            } else if (selectedObject.getClass().isArray()) {
               // ArrayViewerの表示
               new ArrayObjectViewer(selectedObject);
             }
@@ -118,18 +128,26 @@ public class ObjectPoolViewerDialog extends JDialog {
     }
   }
 
-  private static class ArrayObjectViewer extends JDialog {
+  /**
+   * 配列のオブジェクトの中身を表示するViewer
+   * 
+   * @author ono
+   *
+   */
+   private static class ArrayObjectViewer extends JDialog {
 
-    final private int WIDTH = 200;
-    private static int height; //要素の数に応じて可変
-    final private static int LIST_ELM_SIZE = 22;//リスト要素表示時の高さ
+    final private int WIDTH = 250;
+    private static int height; // 要素の数に応じて可変
+    final private static int LIST_ELM_SIZE = 22;// リスト要素表示時の高さ
     static final JFrame frame = new JFrame();
     Object array;
     ObjectList list = new ObjectList();
+    Class<?> clazzType;
 
     public ArrayObjectViewer(Object array) {
       super(frame);
-      this.array = array;
+      this.array = array;//ObjectViewerで選択された配列のオブジェクト
+      clazzType = array.getClass();
       // ここに配列のオブジェクトを表示させる処理をかく
       add(list);
       init();
@@ -144,11 +162,11 @@ public class ObjectPoolViewerDialog extends JDialog {
       int arraySize = Array.getLength(array);
       height = arraySize * LIST_ELM_SIZE;
       for (int j = 0; j < arraySize; j++) {
-        if(Array.get(array, j) != null) {
+        if (Array.get(array, j) != null) {
           Object _array = Array.get(array, j);
-          keys.add("["+ j + "]" + _array.getClass().toString());  
+          keys.add("[" + j + "]" + _array.getClass().toString() + "@" + _array.hashCode());
         } else {
-          keys.add("["+ j + "]" + "null");
+          keys.add("[" + j + "]" + "null");
         }
       }
       list.setListData(keys.toArray());
